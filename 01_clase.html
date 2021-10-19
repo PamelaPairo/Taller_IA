@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>01_clase.utf8</title>
+    <meta charset="utf-8" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <script src="libs/clipboard/clipboard.min.js"></script>
+    <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+    <script src="libs/xaringanExtra-webcam/webcam.js"></script>
+    <script id="xaringanExtra-webcam-options" type="application/json">{"width":"210","height":"220","margin":"1em"}</script>
+    <link href="libs/shareon/shareon.min.css" rel="stylesheet" />
+    <script src="libs/shareon/shareon.min.js"></script>
+    <link href="libs/xaringanExtra-shareagain/shareagain.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-shareagain/shareagain.js"></script>
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link href="libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra_fit-screen/fit-screen.js"></script>
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+class: title-slide, center, middle
+background-image: url(images/portada.jpg)
+background-size: cover
+
+#Clase 1: Aprendizaje Supervisado
+### Pamela E. Pairo
+
+
+
+
+
+
+
+
+<div>
+<style type="text/css">.xaringan-extra-logo {
+width: 110px;
+height: 128px;
+z-index: 0;
+background-image: url(images/uade.jpg);
+background-size: contain;
+background-repeat: no-repeat;
+position: absolute;
+top:1em;right:1em;
+}
+</style>
+<script>(function () {
+  let tries = 0
+  function addLogo () {
+    if (typeof slideshow === 'undefined') {
+      tries += 1
+      if (tries < 10) {
+        setTimeout(addLogo, 100)
+      }
+    } else {
+      document.querySelectorAll('.remark-slide-content:not(.title-slide):not(.inverse):not(.hide_logo)')
+        .forEach(function (slide) {
+          const logo = document.createElement('div')
+          logo.classList = 'xaringan-extra-logo'
+          logo.href = null
+          slide.appendChild(logo)
+        })
+    }
+  }
+  document.addEventListener('DOMContentLoaded', addLogo)
+})()</script>
+</div>
+
+
+
+---
+class: inverse
+
+## Hoja de Ruta
+
+- Clase 1: Conceptos importantes. Clasificación vs. Regresión. Sobreajuste. Trade off Sesgo-Varianza. Entrenamiento, evaluación y testeo. Hiperparámetros. Regresión lineal y polinomial. Árboles de decisión. Ejercitación
+
+- Clase 2: SVM. Regresión Logística. Random Forest. Naïve Bayes. Métricas. Ejercitación
+
+- Clase 3: Validación cruzada. Redes neuronales. Selección de
+modelos. Ejercitación.
+
+- Clase 4: Clustering. K-means. PCA. Embeddings. Ejercitación
+
+- Clase 5: Consideraciones finales. Desbalanceo de clases. Problemas multiclase. Consultas para el trabajo final.
+
+- Clase 6: Presentación de los trabajos finales
+
+---
+## Conceptos Importantes 💡
+
+--
+
+* __Muestra, punto, observación, instancia__ se refiere a una unidad de análisis.
+
+--
+
+* __Atributos, predictores, variables independientes o descriptores__ son los datos de entrada para la ecuación de predicción.
+
+--
+
+* __Salida, variable dependiente, variable respuesta, clase, o "target"__ es la cantidad a ser predicha. 
+
+--
+
+* __Datos categóricos, también conocidos como nominales o atributos__ toman valores específicos que no tienen escala. Ejemplo: bueno/malo, rojo/azul, etc. 
+
+--
+
+* __Datos continuos__ son a base de escalas numéricas. El costo de un producto, la presión sanguínea, etc.
+
+---
+
+## Tipos de Aprendizaje
+
+- **Aprendizaje supervisado**: Datos de entrenamiento + salida esperada
+
+- **Aprendizaje no supervisado**: Datos de entrenamiento (sin salida esperada)
+
+- **Aprendizaje semi-supervisado**: Datos de entrenamiento + pocas salida esperadas
+
+- **Aprendizaje auto-supervisado**: Datos de entrenamiento auto generados (tareas pretexto)
+
+- **Aprendizaje por refuerzo**: "Recompensas" por secuencias de acciones
+
+---
+## Tipos de aprendizaje
+
+.center[
+&lt;img src="images/ml.png" width="88%"/&gt;
+]
+
+---
+
+##Regresión vs. Clasificación
+
+.pull-left[Si `\(y\)` `\(\epsilon\)` `\(R^n\)`: Entonces es un problema de **regresión**.
+]
+.pull-right[
+&lt;img src="images/regresion.png" width="70%"/&gt;
+]
+
+--
+
+.pull-left[Si `\(y\)` es categórica: Entonces es un problema de **clasificación**.
+]
+
+.pull-right[
+&lt;img src="images/clasification.png" width="70%"/&gt;
+]
+---
+class: middle, center
+
+### Regresión vs. Clasificación: Ejemplos
+
+--
+
+Eficiencia de combustible para automóviles
+
+--
+
+Predecir si clientes van a contratar un seguro
+
+--
+
+Predicción de precios de casas según variables geográficas
+
+--
+
+Analisis de sentimientos de noticias financieras (negativo/positivo)
+
+---
+## Entrenamiento, validación y testeo
+
+
+* __Set de entrenamiento__ son los datos utilizados para el modelado. 
+
+* __Set de validación__  ajuste/elección de hiperparámetros
+
+* __Set de testeo__ son los datos utilizados para medir el desempeño del modelo, entre un conjunto de candidatos. 
+
+
+.center[
+&lt;img src="images/split_data.png" width="70%"/&gt;
+]
+
+---
+
+### Ciclo de un proyecto en ciencia de datos
+
+.center[
+&lt;img src="images/ciclo_data.png" width="100%"/&gt;
+]
+
+---
+
+class: inverse, middle, center
+
+#📈 📊 🔨
+#Análisis exploratorio de datos y Curación
+
+---
+
+## Análisis exploratorio de datos 🔎
+
+- Distribución de las variables
+
+--
+
+- Outliers o datos atípicos
+
+--
+- Presencia de valores faltantes
+
+--
+
+- Desbalance de las clases o grupos en estudio
+
+--
+
+- Análisis de la correlación entre variables
+
+---
+
+# Curación de datos 🔨
+
+- Imputación de datos ruidosos, faltantes o erróneos.
+
+--
+
+- Codificación de variables categóricas.
+
+--
+
+- Transformación de variables.
+
+--
+
+- Ingeniería de outliers.
+
+--
+
+- Escalado de Features
+
+--
+
+- Discretización de variables continuas (ej. edad)
+
+---
+
+
+#Base de datos
+
+.panelset[
+.panel[.panel-name[Dataset]
+
+Base de datos pública llamada "Health Insurance Cross Sell Prediction" extraída de [Kaggle](https://www.kaggle.com/anmolkumar/health-insurance-cross-sell-prediction?select=train.csv)
+&lt;div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "&gt;&lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; id &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Gender &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Age &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Driving_License &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Previously_Insured &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Vehicle_Age &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Vehicle_Damage &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Annual_Premium &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Policy_Sales_Channel &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Vintage &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Response &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Male &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 44 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &amp;gt; 2 Years &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Yes &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 40454 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 26 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 217 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Male &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 76 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1-2 Year &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; No &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 33536 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 26 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 183 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Male &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 47 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &amp;gt; 2 Years &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Yes &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 38294 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 26 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 27 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Male &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 21 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &amp;lt; 1 Year &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; No &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 28619 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 152 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 203 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Female &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 29 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &amp;lt; 1 Year &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; No &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 27496 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 152 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 39 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Female &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 24 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; &amp;lt; 1 Year &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Yes &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2630 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 160 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 176 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;&lt;/div&gt;
+]
+
+.panel[.panel-name[Variables]
+
+- **id**	único ID para el cliente
+- **Gender**	género del cliente
+- **Age** Edad del cliente
+- **Driving_License**	0 : Cliente no tiene Licencia de Conducir, 1 : Cliente tiene licencia de conducir
+- **Previously_Insured**	1 : Cliente tiene seguro de auto, 0 : Cliente no tiene seguro de auto
+- **Vehicle_Age**	Edad del vehículo
+- **Vehicle_Damage**	1 : El cliente sufrió daños en su vehículo en el pasado 0 : El cliente NO sufrió daños en su vehículo en el pasado
+- **Annual_Premium**	La cantidad que el cliente debe pagar como premium en el año.
+- **PolicySalesChannel**	Código anónimo para el canal de acercamiento al cliente, es decir. Diferentes agentes, por correo, por teléfono, en persona, etc.
+- **Vintage**	Número de días que el cliente ha estado asociado con la empresa
+- **Response**	1 : Cliente está interesado, 0 : Cliente no está interesado
+
+]
+
+.panel[.panel-name[Variable Respuesta]
+
+
+```r
+
+library(ggplot2)
+# Basic barplot
+g &lt;- ggplot(df, aes(Response))
+g + geom_bar()
+```
+
+![](01_clase_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
+
+.panel[.panel-name[Age y Gender]
+
+![](01_clase_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
+
+
+]
+]
+]
+
+
+
+---
+
+class: inverse, middle, center
+
+#💻
+###Demo Análisis exploratorio y Curación
+
+---
+class: inverse, middle, center
+
+#Aprendizaje Supervisado: Regresión
+
+---
+
+## Regresión Lineal
+
+Busca ajustar los datos de entrenamiento a mediante una función que sea un **hiperplano**.
+
+
+.center[
+`\(y = \theta_0 +\theta_1 x_1+ \theta_2 x_2...+ \theta_d x_d\)` `$$y = \sum_{j = 0}^{d} \theta_j x_j$$`
+]
+
+--
+.center[
+&lt;img src="images/lineal.jpg" width="45%"/&gt;
+]
+---
+## Regresión Lineal: Función de Costo
+
+Utilizaremos una función de costo (error cuadrático) para medir el error en la predicción de y mediante f(x). Se busca minimizar la suma del error cuadrático
+
+.center[
+&lt;img src="images/costo.png" width="90%"/&gt;
+]
+
+---
+## Regresión Polinomial
+
+Busca ajustar los datos de entrenamiento mediante una **función polinomial**:
+
+.center[
+`\(y (x, w) = w_0 +w_1 x_1+ w_2 x^2...+ w_m x^m\)` `$$y(x, w) = \sum_{j = 0}^{m} w_j x^j$$`
+]
+
+--
+
+.center[
+&lt;img src="images/lineal_pol.jpg" width="80%"/&gt;
+]
+
+---
+## Sobreajuste o overfitting
+
+.center[
+&lt;img src="images/over.jpg" width="80%"/&gt;
+]
+--
+.center[
+&lt;img src="images/costo_over.jpg" width="60%"/&gt;
+]
+
+---
+## Sobreajuste o overfitting
+
+.bg-washed-light-purple.b--light-purple.ba.bw2.br3.shadow-5.ph4.mt5[
+
+El sobreajuste ocurre cuando la función de costo es realmente pequeño, pero la generalización del modelo no es confiable. Esto se debe a que el modelo aprende "demasiado" del conjunto de datos de entrenamiento. 
+
+También se dice, que el modelo memoriza los datos de entrenamiento por eso no generalizará bien frente a nuevos datos. Un modelo que sobreajusta, tiene una **alta varianza**
+
+]
+
+---
+
+#Trade-off sesgo-varianza
+
+.center[
+&lt;img src="images/sesgo.png" width="62%"/&gt;
+]
+---
+class: center, middle
+
+# 💡Tener siempre presente 💡
+
+### El objetivo de un modelo de Machine Learning es que generalice bien frente a nuevos datos o datos no vistos por el modelo (set de testeo)
+
+---
+
+class: inverse, middle, center
+
+#💻
+###Demo Regresión lineal y polinomial
+
+---
+
+class: inverse, middle, center
+
+#Aprendizaje Supervisado: Árboles de decisión
+
+---
+
+## Árboles de decisión
+
+Se quiere predecir 3 especies de _Iris_ a partir del ancho y largo del sépalo: _Iris setosa_, _Iris versicolor_ y _Iris virginica_.
+
+--
+
+.pull-left[
+&lt;img src="images/iris.png" width="100%"/&gt;
+]
+
+--
+
+.pull-right[
+&lt;img src="images/iris_plot.png" width="100%"/&gt;
+]
+
+---
+
+## Hiperparámetro
+
+.bg-washed-light-purple.b--light-purple.ba.bw2.br3.shadow-5.ph4.mt5[
+Valores no aprendidos por el algoritmo desde los datos y por ende deben ser seteados antes de entrenar el algoritmo.
+
+]
+
+--
+
+### En árboles de decisión:
+
+- `n_min` : n mínimo para dividir los nodos
+
+- `tree_depth`: límite a la profundidad del árbol
+
+- `cost_complexity`: costo o penalización a los errores de árboles más complejos. Es una forma de poda.
+---
+class: inverse, middle, center
+
+#💻
+###Demo Árboles de decisión
+
+---
+
+## Comunidades y Recursos útiles
+
+.pull-left[
+&lt;img src="images/cheet_ggplot2.png" width="90%"/&gt;
+]
+
+.pull-right[
+
+&lt;img src="images/r4data.png" width="50%"/&gt;
+
+]
+
+.pull-left[
+
+&lt;img src="images/rladies.png" width="40%"/&gt;
+]
+
+.pull-right[
+
+&lt;img src="images/stack.jpg" width="60%"/&gt;
+]
+
+---
+
+## Comunidades y Recursos útiles
+
+.pull-left[
+&lt;img src="images/comunidades_latin.png" width="100%"/&gt;
+]
+
+--
+
+.pull-right[
+
+[10-12 de noviembre LatinR, VIRTUAL](https://latin-r.com/) Talleres y presentaciones orales.
+
+&lt;img src="images/latinr.jpg" width="90%"/&gt;
+]
+
+---
+
+##Referencias
+
+- [Artículo acerca del Sobreajuste](https://towardsdatascience.com/what-are-overfitting-and-underfitting-in-machine-learning-a96b30864690) en Towards to Data Science
+
+- [Hands-on Machine Learning with R](https://bradleyboehmke.github.io/HOML/DT.html) de Bradley Boehmke y Brandon Greenwell.
+
+- [Tidy Modeling with R](https://www.tmwr.org/index.html) de Max Kuhn y Julia Silge
+
+- [Introducción a Machine Learning con Tidymodels](https://ml-tidy-wibds.netlify.app/material/), workshop dictado en el marco de Women in Bioinformatics &amp; Data Science LA 2021
+
+- [Supervised Machine Learning course](https://supervised-ml-course.netlify.app/) de Julia Silge
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": false,
+"countIncrementalSlides": false,
+"slideNumberFormat": "<div class=\"progress-bar-container\">\n  <div class=\"progress-bar\" style=\"width: calc(%current% / %total% * 100%);\">\n  </div>\n</div>"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

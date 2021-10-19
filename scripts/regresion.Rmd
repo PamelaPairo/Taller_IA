@@ -1,0 +1,111 @@
+---
+title: "regresion"
+author: "Pamela Pairo"
+date: "10/10/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Cargar base de datos y librerias necesarias
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(corrgram)
+
+data <- read.csv("financial_reducido.csv")
+
+data <-select(data, -c(X))
+head(data)
+```
+Estadística descriptiva
+
+```{r}
+summary(data)
+```
+
+Chequeamos datos faltantes por columnas
+
+```{r}
+colSums(is.na(data))
+```
+
+Variable target
+
+```{r}
+ggplot(data, aes(x=0, y=AnualPriceVariation))+
+  geom_boxplot()
+```
+removiendo outliers 
+
+```{r}
+Q3 <- quantile(data$AnualPriceVariation, .75)
+IQR <- IQR(data$AnualPriceVariation)
+
+no_outliers <- subset(data, data$AnualPriceVariation < (Q3 + 1.5*IQR))
+```
+
+romoviendo en y
+
+```{r}
+ggplot(no_outliers, aes(x=0, y=AnualPriceVariation))+
+  geom_boxplot()
+```
+
+Correlacion entre variables
+
+```{r}
+library(corrplot)
+numericas <- select(df, -c(Sector))
+
+cor(numericas)
+```
+
+Eliminando los valores faltantes
+
+```{r}
+df <- na.omit(no_outliers)
+df
+```
+
+
+# Weight vs Height plot
+
+
+```{r}
+ggplot(data=df, aes(x=Gross.Profit, y=AnualPriceVariation)) + 
+  geom_point(aes(color=Sector, size=10))
+```
+
+# 3. TRAIN/TEST SPLIT
+
+```{r}
+
+library(tidymodels)
+set.seed(42)
+
+p_split <- numericas %>%
+  initial_split(prop=0.75)
+p_train <- training(p_split)
+p_test  <- testing(p_split)
+p_split
+```
+
+```{r}
+lm_spec <- linear_reg() %>%
+  set_engine(engine = "lm")
+lm_spec
+```
+
+```{r}
+set.seed(123)
+lm_fit <- lm_spec %>%
+  fit(AnualPriceVariation ~ Revenue,
+    data = numericas
+  )
+lm_fit
+```
+
