@@ -25,8 +25,7 @@ background-size: cover
 
 ```{r setup, include = FALSE}
 options(htmltools.dir.version = FALSE)
-knitr::opts_chunk$set(message = FALSE)
-knitr::opts_chunk$set(warning = FALSE)
+
 library(knitr)
 library(tidyverse)
 # set default options
@@ -265,6 +264,8 @@ class: inverse, middle, center
 .panel[.panel-name[Dataset]
 
 Base de datos pública llamada "Health Insurance Cross Sell Prediction" extraída de [Kaggle](https://www.kaggle.com/anmolkumar/health-insurance-cross-sell-prediction?select=train.csv)
+
+
 ```{r panel-chunk, echo=FALSE}
 library(kableExtra)
 
@@ -335,6 +336,16 @@ class: inverse, middle, center
 class: inverse, middle, center
 
 #Aprendizaje Supervisado: Regresión
+
+---
+class: inverse, middle, center
+
+kk
+```{r}
+
+countdown(minutes = 15, seconds = 15)
+
+```
 
 ---
 
