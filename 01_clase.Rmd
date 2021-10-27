@@ -25,6 +25,8 @@ background-size: cover
 
 ```{r setup, include = FALSE}
 options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
 library(knitr)
 library(tidyverse)
 # set default options
