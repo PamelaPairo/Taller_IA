@@ -25,6 +25,7 @@ background-size: cover
 
 ```{r setup, include = FALSE}
 options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
 
 library(knitr)
 library(tidyverse)
@@ -340,10 +341,11 @@ class: inverse, middle, center
 ---
 class: inverse, middle, center
 
-kk
+## Descanso
+
 ```{r}
 
-countdown(minutes = 15, seconds = 15)
+countdown_fullscreen(minutes = 15, seconds = 0, fonta_size="7em", color_background = "white")
 
 ```
 
