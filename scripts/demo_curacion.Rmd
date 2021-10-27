@@ -1,0 +1,137 @@
+---
+title: "Análisis exploratorio y Curacion"
+author: "Pamela Pairo"
+date: "10/27/2021"
+output: rmdformats::readthedown
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+
+library(tidyverse)
+library(tidymodels)
+library(recipes)
+library(kableExtra)
+```
+
+Una compañia de seguros esta interesada en predecir en base a información recolectada enl año anterior, si sus cliente scontratarían o no un seguro para su vehículo. Mas información en la competencia de [Kaggle](https://www.kaggle.com/anmolkumar/health-insurance-cross-sell-prediction?select=train.csv)
+
+```{r}
+
+df <-read.csv("data/train.csv")
+
+str(df)
+```
+
+## Boxplot
+
+```{r}
+boxplot(df$Age)
+```
+
+Segun `Response`:
+
+```{r}
+boxplot(Age~Response,
+data=df,
+xlab="Response",
+ylab="Age",
+col="orange",
+border="brown"
+)
+```
+
+## Correlación entre variables
+
+```{r}
+
+numericals <- select_if(df, is.numeric) 
+
+### Correlation Matrix
+cormat <- round(x = cor(numericals), digits = 2)
+
+# round use to just to get first two digits after decimal point.
+head(cormat)
+```
+
+### Visualizando las correlaciones entre las variables
+
+```{r}
+library(ggcorrplot)
+
+ggcorrplot::ggcorrplot(cor(numericals))
+```
+
+## Escalado
+
+**Escalar** es restarle la media y dividirlo por el desvio estaándar. Es conveniente realizarlo cuando las variables estan medidas en diferentes escalas.
+
+**MinMax** llevarlo al rango del min y máximo
+
+```{r}
+df_escalado <- df %>%
+  #select(-id) %>%
+  mutate(scale_Annual_Premium= scale(Annual_Premium))%>%
+  mutate(Age_minmax= scales::rescale(Age, to=c(25,50)))
+```
+
+
+## Encodings o codificación de variables
+categóricas
+
+Los algoritmos de aprendizaje automático requieren **exclusivamente** datos numéricos. Por lo que, es necesario transformar nuestras variables categóricas a algún formato numérico
+
+```{r}
+count(df, Vehicle_Age) %>% arrange(n)
+```
+
+### Realizando one-hot encoding: 
+
+```{r}
+library(caret)
+
+#define one-hot encoding function
+dummy <- dummyVars(" ~ .", data=df)
+
+#perform one-hot encoding on data frame
+final_df <- data.frame(predict(dummy, newdata=df))
+
+#view final data frame
+head (final_df, 10)
+```
+
+## Visualizando valores faltantes
+
+En el caso de tener valores faltantes (NA), es importante analizar su distribución y así determinar la mejor forma de preprocesarlos.
+
+Puede ocurrir que un _feature_ posea muchos datos faltantes por lo que quizas convenga eliminar esa caracterisca.
+
+Si hay datos faltantes corresponde hacer una **imputación**.
+
+**imputación**: estimar un valor que puede haber sido muestreado pero no se lo conoce.
+
+```{r}
+sum(is.na(df))
+```
+
+
+Visualizando NAs
+
+```{r}
+
+df %>%
+  is.na() %>%
+  reshape2::melt() %>%
+  ggplot(aes(Var2, Var1, fill=value)) + 
+    geom_raster() + 
+    coord_flip() +
+    scale_y_continuous(NULL, expand = c(0, 0)) +
+    scale_fill_grey(name = "", 
+                    labels = c("Present", 
+                               "Missing")) +
+    xlab("Observation") +
+    theme(axis.text.y  = element_text(size = 4))
+```
+
