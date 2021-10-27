@@ -345,7 +345,7 @@ class: inverse, middle, center
 
 ```{r}
 
-countdown_fullscreen(minutes = 15, seconds = 0, fonta_size="7em", color_background = "white")
+countdown(minutes = 15, seconds = 0, font_size="7em", color_background = "white")
 
 ```
 
