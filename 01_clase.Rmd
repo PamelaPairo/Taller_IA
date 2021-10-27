@@ -269,7 +269,7 @@ Base de datos pública llamada "Health Insurance Cross Sell Prediction" extraíd
 ```{r panel-chunk, echo=FALSE}
 library(kableExtra)
 
-df <- read.csv("data/train.csv")
+df <- read.csv("scripts/data/train.csv")
 
 df %>%
 head() %>%
