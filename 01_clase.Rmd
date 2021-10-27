@@ -80,12 +80,11 @@ class: inverse
 
 ## Hoja de Ruta
 
-- Clase 1: Conceptos importantes. Clasificación vs. Regresión. Sobreajuste. Trade off Sesgo-Varianza. Entrenamiento, evaluación y testeo. Hiperparámetros. Regresión lineal y polinomial. Árboles de decisión. Ejercitación
+- Clase 1: Conceptos importantes. Clasificación vs. Regresión. Análisis exploratorio y curación. Ingeniería de features. Sobreajuste. Trade off Sesgo-Varianza. Entrenamiento, evaluación y testeo. Regresión lineal y polinomial. Ejercitación
 
-- Clase 2: SVM. Regresión Logística. Random Forest. Naïve Bayes. Métricas. Ejercitación
+- Clase 2: Árboles de decisión.Random Forest. SVM. Regresión Logística. Naïve Bayes. Hiperparámetros. Métricas. Ejercitación
 
-- Clase 3: Validación cruzada. Redes neuronales. Selección de
-modelos. Ejercitación.
+- Clase 3: Validación cruzada. Redes neuronales. Selección de modelos. Ejercitación.
 
 - Clase 4: Clustering. K-means. PCA. Embeddings. Ejercitación
 
@@ -177,6 +176,7 @@ Predicción de precios de casas según variables geográficas
 Analisis de sentimientos de noticias financieras (negativo/positivo)
 
 ---
+
 ## Entrenamiento, validación y testeo
 
 
@@ -256,7 +256,7 @@ class: inverse, middle, center
 ---
 
 
-#Base de datos
+##Base de datos del Proyecto Final
 
 .panelset[
 .panel[.panel-name[Dataset]
@@ -326,6 +326,7 @@ class: inverse, middle, center
 
 #`r emo::ji("computer")`
 ###Demo Análisis exploratorio y Curación
+
 
 ---
 class: inverse, middle, center
@@ -413,54 +414,6 @@ class: inverse, middle, center
 
 #`r emo::ji("computer")`
 ###Demo Regresión lineal y polinomial
-
----
-
-class: inverse, middle, center
-
-#Aprendizaje Supervisado: Árboles de decisión
-
----
-
-## Árboles de decisión
-
-Se quiere predecir 3 especies de _Iris_ a partir del ancho y largo del sépalo: _Iris setosa_, _Iris versicolor_ y _Iris virginica_.
-
---
-
-.pull-left[
-<img src="images/iris.png" width="100%"/>
-]
-
---
-
-.pull-right[
-<img src="images/iris_plot.png" width="100%"/>
-]
-
----
-
-## Hiperparámetro
-
-.bg-washed-light-purple.b--light-purple.ba.bw2.br3.shadow-5.ph4.mt5[
-Valores no aprendidos por el algoritmo desde los datos y por ende deben ser seteados antes de entrenar el algoritmo.
-
-]
-
---
-
-### En árboles de decisión:
-
-- `n_min` : n mínimo para dividir los nodos
-
-- `tree_depth`: límite a la profundidad del árbol
-
-- `cost_complexity`: costo o penalización a los errores de árboles más complejos. Es una forma de poda.
----
-class: inverse, middle, center
-
-#`r emo::ji("computer")`
-###Demo Árboles de decisión
 
 ---
 
