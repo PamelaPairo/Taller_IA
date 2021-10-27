@@ -6,6 +6,10 @@
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
     <script src="libs/tile-view/tile-view.js"></script>
+    <script src="libs/fabric/fabric.min.js"></script>
+    <link href="libs/xaringanExtra-scribble/scribble.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-scribble/scribble.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":2,"eraser_size":20}) })</script>
     <script src="libs/clipboard/clipboard.min.js"></script>
     <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
     <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
@@ -266,6 +270,15 @@ class: inverse, middle, center
 .panel[.panel-name[Dataset]
 
 Base de datos pública llamada "Health Insurance Cross Sell Prediction" extraída de [Kaggle](https://www.kaggle.com/anmolkumar/health-insurance-cross-sell-prediction?select=train.csv)
+
+```
+## 
+## Attaching package: 'kableExtra'
+## The following object is masked from 'package:dplyr':
+## 
+##     group_rows
+```
+
 &lt;div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "&gt;&lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
  &lt;thead&gt;
   &lt;tr&gt;
@@ -392,11 +405,11 @@ g &lt;- ggplot(df, aes(Response))
 g + geom_bar()
 ```
 
-![](01_clase_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
+![](01_clase_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
 
 .panel[.panel-name[Age y Gender]
 
-![](01_clase_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
+![](01_clase_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
 
 
 ]
