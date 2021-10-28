@@ -1,5 +1,5 @@
 ---
-title: "Análisis exploratorio y Curacion"
+title: "Análisis exploratorio y Curación"
 author: "Pamela Pairo"
 date: "10/27/2021"
 output: rmdformats::readthedown
@@ -11,16 +11,14 @@ knitr::opts_chunk$set(message = FALSE)
 knitr::opts_chunk$set(warning = FALSE)
 
 library(tidyverse)
-library(tidymodels)
-library(recipes)
 library(kableExtra)
 ```
 
-Una compañia de seguros esta interesada en predecir en base a información recolectada enl año anterior, si sus cliente scontratarían o no un seguro para su vehículo. Mas información en la competencia de [Kaggle](https://www.kaggle.com/anmolkumar/health-insurance-cross-sell-prediction?select=train.csv)
+Una compañia de seguros esta interesada en predecir en base a información recolectada en el año anterior, si sus cliente contratarían o no un seguro para su vehículo. Mas información en la competencia de [Kaggle](https://www.kaggle.com/anmolkumar/health-insurance-cross-sell-prediction?select=train.csv)
 
 ```{r}
 
-df <-read.csv("data/train.csv")
+df <-read.csv("data/dataset.csv")
 
 str(df)
 ```
@@ -66,20 +64,19 @@ ggcorrplot::ggcorrplot(cor(numericals))
 
 ## Escalado
 
-**Escalar** es restarle la media y dividirlo por el desvio estaándar. Es conveniente realizarlo cuando las variables estan medidas en diferentes escalas.
+**Escalar** es restarle la media y dividirlo por el desvio estándar. Es conveniente realizarlo cuando las variables estan medidas en diferentes escalas.
 
 **MinMax** llevarlo al rango del min y máximo
 
 ```{r}
 df_escalado <- df %>%
-  #select(-id) %>%
+  select(-id) %>%
   mutate(scale_Annual_Premium= scale(Annual_Premium))%>%
   mutate(Age_minmax= scales::rescale(Age, to=c(25,50)))
 ```
 
 
-## Encodings o codificación de variables
-categóricas
+## Encodings o codificación de variables categóricas
 
 Los algoritmos de aprendizaje automático requieren **exclusivamente** datos numéricos. Por lo que, es necesario transformar nuestras variables categóricas a algún formato numérico
 
