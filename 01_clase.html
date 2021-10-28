@@ -270,15 +270,6 @@ class: inverse, middle, center
 Base de datos pública llamada "Health Insurance Cross Sell Prediction" extraída de [Kaggle](https://www.kaggle.com/anmolkumar/health-insurance-cross-sell-prediction?select=train.csv)
 
 
-
-```
-## 
-## Attaching package: 'kableExtra'
-## The following object is masked from 'package:dplyr':
-## 
-##     group_rows
-```
-
 &lt;div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "&gt;&lt;table class="table" style="margin-left: auto; margin-right: auto;"&gt;
  &lt;thead&gt;
   &lt;tr&gt;
@@ -400,7 +391,7 @@ Base de datos pública llamada "Health Insurance Cross Sell Prediction" extraíd
 ```r
 
 library(ggplot2)
-# Basic barplot
+
 g &lt;- ggplot(df, aes(Response))
 g + geom_bar()
 ```
@@ -575,8 +566,7 @@ class: inverse, middle, center
 <script>var slideshow = remark.create({
 "highlightStyle": "github",
 "highlightLines": false,
-"countIncrementalSlides": false,
-"slideNumberFormat": "<div class=\"progress-bar-container\">\n  <div class=\"progress-bar\" style=\"width: calc(%current% / %total% * 100%);\">\n  </div>\n</div>"
+"countIncrementalSlides": false
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));

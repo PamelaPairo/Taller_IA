@@ -9,11 +9,6 @@ output:
       highlightStyle: github
       highlightLines: false
       countIncrementalSlides: false
-      slideNumberFormat: |
-        <div class="progress-bar-container">
-          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
-          </div>
-        </div>
 ---
 
 class: title-slide, center, middle
@@ -26,7 +21,7 @@ background-size: cover
 ```{r setup, include = FALSE}
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(warning = FALSE)
-
+knitr::opts_chunk$set(message = FALSE)
 library(knitr)
 library(tidyverse)
 # set default options
@@ -298,7 +293,7 @@ head() %>%
 ```{r, echo=TRUE, fig.height = 3}
 
 library(ggplot2)
-# Basic barplot
+
 g <- ggplot(df, aes(Response))
 g + geom_bar()
 
