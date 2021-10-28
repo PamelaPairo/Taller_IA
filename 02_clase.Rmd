@@ -9,11 +9,6 @@ output:
       highlightStyle: github
       highlightLines: false
       countIncrementalSlides: false
-      slideNumberFormat: |
-        <div class="progress-bar-container">
-          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
-          </div>
-        </div>
 ---
 
 class: title-slide, center, middle
@@ -52,10 +47,6 @@ xaringanExtra::use_extra_styles(
 ```
 
 
-```{r include=FALSE}
-library(countdown)
-```
-
 ```{r xaringan-logo, echo=FALSE}
 
 xaringanExtra::use_fit_screen()
@@ -74,6 +65,78 @@ style_mono_accent(
 
 )
 ```
+
+---
+# En la clase de hoy...
+
+--
+
+### En la primera parte:
+
+- Regresión Logística 
+- Naïve Bayes
+- Support Vector Machine (SVM)
+- Árboles de decisión
+- Random Forest 
+
+ 
+
+--
+
+### Recreo `r emo::ji("coffee")`🧉
+
+--
+
+### En la segunda parte:
+
+- Métricas
+
+---
+
+class: inverse, middle, center
+
+#Aprendizaje Supervisado: Regresión Logística
+
+---
+
+#Regresión Logística
+
+Utiliza un **enfoque probabilístico**
+
+.center[
+<img src="images/logistic.png" width="50%"/>
+]
+
+
+.center[
+<img src="images/sigmoidea.png" width="45%"/>
+]
+
+---
+# Regresión Logística
+
+Se define un umbral (en este caso 0.5):
+
+.center[
+
+Se predice  $y= 1$ si $h_{\theta}(x) \ge 0.5$
+
+Se predice  $y= 0$ si $h_{\theta}(x) < 0.5$
+
+
+<img src="images/umbral.png" width="45%"/>
+]
+
+.footnote[Extraído del material didáctico de Cristian Cardellino]
+---
+
+## Regresión Logística: Función de Costo
+
+.center[
+<img src="images/costo_log.png" width="85%"/>
+
+<img src="images/cost_log_plot.png" width="85%"/>
+]
 
 ---
 
@@ -123,3 +186,21 @@ class: inverse, middle, center
 #`r emo::ji("computer")`
 ###Demo Árboles de decisión
 
+---
+
+---
+class: inverse, middle, center
+
+## Descanso
+
+```{r}
+
+library(countdown)
+countdown(minutes = 15, seconds = 0, font_size="7em", color_background = "white")
+
+```
+
+---
+# Referencias
+
+- [Introduction to Logistic Regression](https://towardsdatascience.com/introduction-to-logistic-regression-66248243c148), artículo publicado en Towards to Data Science
