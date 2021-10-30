@@ -64,6 +64,14 @@ style_mono_accent(
   code_font_google   = google_font("Fira Mono")
 
 )
+
+colors = c(
+  red = "#f34213",
+  purple = "#3e2f5b",
+  orange = "#ff8811",
+  green = "#136f63",
+  white = "#FFFFFF"
+)
 ```
 
 ---
@@ -83,7 +91,7 @@ style_mono_accent(
 
 --
 
-### Recreo `r emo::ji("coffee")`🧉
+### **.orange[Recreo]** `r emo::ji("coffee")`🧉
 
 --
 
@@ -95,13 +103,13 @@ style_mono_accent(
 
 class: inverse, middle, center
 
-#Aprendizaje Supervisado: Regresión Logística
+#Regresión Logística
 
 ---
 
 #Regresión Logística
 
-Utiliza un **enfoque probabilístico**
+Utiliza un **.purple[enfoque probabilístico]**
 
 .center[
 <img src="images/logistic.png" width="50%"/>
@@ -139,16 +147,27 @@ Se predice  $y= 0$ si $h_{\theta}(x) < 0.5$
 ]
 
 ---
+class: inverse, middle, center
+
+# Naive Bayes
+
+---
 
 class: inverse, middle, center
 
-#Aprendizaje Supervisado: Árboles de decisión
+# Support Vector Machine (SVM)
+
+---
+
+class: inverse, middle, center
+
+# Árboles de decisión
 
 ---
 
 ## Árboles de decisión
 
-Se quiere predecir 3 especies de _Iris_ a partir del ancho y largo del sépalo: _Iris setosa_, _Iris versicolor_ y _Iris virginica_.
+Funcionan bien para datos no linealmente separables.Se quiere predecir 3 especies de _Iris_ a partir del ancho y largo del sépalo: _Iris setosa_, _Iris versicolor_ y _Iris virginica_.
 
 --
 
@@ -180,6 +199,20 @@ Valores no aprendidos por el algoritmo desde los datos y por ende deben ser sete
 - `tree_depth`: límite a la profundidad del árbol
 
 - `cost_complexity`: costo o penalización a los errores de árboles más complejos. Es una forma de poda.
+
+---
+
+# Ensamble learning: Bagging
+
+Los **.orange[árboles de decisión]** son algoritmos inestables debido a que pequeñas variaciones en el dataset pueden generar modelos muy diferentes.
+--
+
+.bg-washed-light-purple.b--light-purple.ba.bw2.br3.shadow-5.ph4.mt4[
+**.orange[Bagging (Bootstrap Aggregation)]** es un método para hacer aprendizaje por _ensemble_.
+
+Consiste en realizar K subsets del dataset aleatoriamente y con reemplazo, resultando en un _ensamble_ de K modelos. La asignación de la clase se realiza por mayoria simple en casos de clasificación.
+
+]
 ---
 class: inverse, middle, center
 
@@ -187,7 +220,19 @@ class: inverse, middle, center
 ###Demo Árboles de decisión
 
 ---
+class: inverse, middle, center
 
+# Random Forest
+---
+# Random Forest
+
+Son una modificación a Bagging para Árboles de Decisión. En cada árbol se consideran sólo M atributos elegidos aleatoriamente.
+
+El algoritmo es sencillo, fácil de implementar, fácil de usar y requiere de poco ajuste de parámetros.
+
+.center[
+<img src="images/random_forest.png" width="55%"/>
+]
 ---
 class: inverse, middle, center
 
