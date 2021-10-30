@@ -158,6 +158,12 @@ class: inverse, middle, center
 # Support Vector Machine (SVM)
 
 ---
+# SVM
+
+.center[<img src="images/svm.png" width="85%"/>]
+
+.footnote[Imagen extraída de [este link](https://www.javatpoint.com/machine-learning-support-vector-machine-algorithm)]
+---
 
 class: inverse, middle, center
 
