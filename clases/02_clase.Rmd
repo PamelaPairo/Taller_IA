@@ -160,6 +160,21 @@ class: inverse, middle, center
 ---
 # SVM
 
+.pull-left[<img src="images/example_svm.png" width="100%"/>]
+
+.pull-right[<img src="images/example_svm.png" width="100%"/>]
+
+---
+# SVM
+
+.bg-washed-light-purple.b--light-purple.ba.bw2.br2.shadow-5.ph2.mt2[
+
+El algoritmo de **SVM** encuentra el hiperplano que devuelve el **mayor margen** entre sí mismo y los vectores de soporte
+
+]
+---
+# SVM
+
 .center[<img src="images/svm.png" width="85%"/>]
 
 .footnote[Imagen extraída de [este link](https://www.javatpoint.com/machine-learning-support-vector-machine-algorithm)]
@@ -173,7 +188,9 @@ class: inverse, middle, center
 
 ## Árboles de decisión
 
-Funcionan bien para datos no linealmente separables.Se quiere predecir 3 especies de _Iris_ a partir del ancho y largo del sépalo: _Iris setosa_, _Iris versicolor_ y _Iris virginica_.
+Funcionan bien para datos no linealmente separables.
+
+Se quiere predecir 3 especies de _Iris_ a partir del ancho y largo del sépalo: _Iris setosa_, _Iris versicolor_ y _Iris virginica_.
 
 --
 
