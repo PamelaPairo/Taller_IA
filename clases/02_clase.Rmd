@@ -160,6 +160,12 @@ class: inverse, middle, center
 ---
 # SVM
 
+.bg-washed-light-purple.b--light-purple.ba.bw2.br2.shadow-5.ph2.mt2[
+
+El algoritmo de **SVM** encuentra el hiperplano que devuelve el **mayor margen** entre sí mismo y los vectores de soporte
+
+]
+
 .pull-left[<img src="images/example_svm.png" width="100%"/>]
 
 .pull-right[<img src="images/example_svm.png" width="100%"/>]
@@ -180,6 +186,16 @@ El algoritmo de **SVM** encuentra el hiperplano que devuelve el **mayor margen**
 .footnote[Imagen extraída de [este link](https://www.javatpoint.com/machine-learning-support-vector-machine-algorithm)]
 ---
 
+### SVM para datos NO linealmente separables
+
+Se debe proyectar a una dimensión donde los datos si sean linealmente separables
+
+.center[<img src="images/svm_kernel.png" width="100%"/>]
+
+**.orange[Tipo de kernels]**: lineal, polinomial, RBF.
+
+.footnote[Imagen extraída de [este link](https://medium.com/analytics-vidhya/how-to-classify-non-linear-data-to-linear-data-bb2df1a6b781)]
+---
 class: inverse, middle, center
 
 # Árboles de decisión
