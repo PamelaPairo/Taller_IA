@@ -149,6 +149,12 @@ Se predice  $y= 0$ si $h_{\theta}(x) < 0.5$
 ---
 class: inverse, middle, center
 
+#`r emo::ji("computer")`
+###Demo Regresión Logística
+
+---
+class: inverse, middle, center
+
 # Naive Bayes
 
 ---
@@ -193,6 +199,13 @@ $\ P(y|x_1, x_2..x_n)= \LARGE \frac{P(x_1|y) * P(x_n|y)...P(x_1|y)* P(y)}{P(x_1)
 
 class: inverse, middle, center
 
+#`r emo::ji("computer")`
+###Demo Naive Bayes
+
+---
+
+class: inverse, middle, center
+
 # Support Vector Machine (SVM)
 
 ---
@@ -225,6 +238,12 @@ Se debe proyectar a una dimensión donde los datos si sean linealmente separable
 **.orange[Tipo de kernels]**: lineal, polinomial, RBF.
 
 .footnote[Imagen extraída de [este link](https://medium.com/analytics-vidhya/how-to-classify-non-linear-data-to-linear-data-bb2df1a6b781)]
+---
+class: inverse, middle, center
+
+#`r emo::ji("computer")`
+###Demo SVM
+
 ---
 class: inverse, middle, center
 
@@ -282,11 +301,6 @@ Los **.orange[árboles de decisión]** son algoritmos inestables debido a que pe
 Consiste en realizar K subsets del dataset aleatoriamente y con reemplazo, resultando en un _ensamble_ de K modelos. La asignación de la clase se realiza por mayoria simple en casos de clasificación.
 
 ]
----
-class: inverse, middle, center
-
-#`r emo::ji("computer")`
-###Demo Árboles de decisión
 
 ---
 class: inverse, middle, center
@@ -305,7 +319,13 @@ El algoritmo es sencillo, fácil de implementar, fácil de usar y requiere de po
 ---
 class: inverse, middle, center
 
-## Descanso
+#`r emo::ji("computer")`
+###Demo Árboles de decisión y Random Forest
+
+---
+class: inverse, middle, center
+
+## Descanso `r emo::ji("party")` `r emo::ji("coffee")`🧉
 
 ```{r}
 
@@ -315,6 +335,13 @@ countdown(minutes = 15, seconds = 0, font_size="7em", color_background = "white"
 ```
 
 ---
+class: inverse, middle, center
+
+#Métricas
+
+---
 # Referencias
 
 - [Introduction to Logistic Regression](https://towardsdatascience.com/introduction-to-logistic-regression-66248243c148), artículo publicado en Towards to Data Science
+
+
