@@ -156,6 +156,44 @@ class: inverse, middle, center
 
 ---
 
+# Teorema de Bayes
+
+.bg-washed-light-purple.b--light-purple.ba.bw2.br2.shadow-5.ph3.mt2[
+.center[
+`\(\LARGE P(A|B)= \frac{P(B|A) * P(A)}{P(B)}\)`
+]
+]
+
+El teorema establece que se puede encontrar la probabilidad de **A** (e.g. una clase objetivo) dada la ocurrencia de B (e.g. un conjunto de features). Es decir, B es la evidencia y A es la hipótesis.
+
+--
+
+_.orange[Dada nuestras variables predictoras, ¿cuál es la probabilidad de cada clase?
+]_
+
+.center[
+`\(\ P(Clase|Predictores)= \LARGE \frac{P(Predictores|Clase) * P(Clase)}{P(Predictores)}\)`
+
+`\(\LARGE = \frac{Prior * Likelihood}{Evidencia}\)`
+
+`\(\ Predictores= \LARGE (x_1, x_2, x_3...x_n)\)`
+]
+
+---
+
+#¿Porqué Naive?
+
+La principal asunción es que **.purple[los atributos son independientes entre sí.]**
+
+Una segunda asunción, es que **.purple[todos los atributos tienen el mismo efecto en la salida del algoritmo.]**
+
+###Entonces...
+
+.center[
+`\(\ P(y|x_1, x_2..x_n)= \LARGE \frac{P(x_1|y) * P(x_n|y)...P(x_1|y)* P(y)}{P(x_1)* P(x_2)...P(x_N)}\)`
+]
+---
+
 class: inverse, middle, center
 
 # Support Vector Machine (SVM)
@@ -173,14 +211,6 @@ El algoritmo de **SVM** encuentra el hiperplano que devuelve el **mayor margen**
 
 .pull-right[&lt;img src="images/example_svm.png" width="100%"/&gt;]
 
----
-# SVM
-
-.bg-washed-light-purple.b--light-purple.ba.bw2.br2.shadow-5.ph2.mt2[
-
-El algoritmo de **SVM** encuentra el hiperplano que devuelve el **mayor margen** entre sí mismo y los vectores de soporte
-
-]
 ---
 # SVM
 
@@ -280,7 +310,7 @@ class: inverse, middle, center
 
 ## Descanso
 
-<div class="countdown" id="timer_6180361f" style="right:0;bottom:0;font-size:7em;" data-warnwhen="0">
+<div class="countdown" id="timer_61804478" style="right:0;bottom:0;font-size:7em;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">15</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
