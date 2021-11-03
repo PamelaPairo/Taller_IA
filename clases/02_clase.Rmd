@@ -391,6 +391,11 @@ Medida armónica entre Precision y recall
 $\LARGE F1 = 2* \frac{precision * recall}{precision + recall}$
 ]
 
+#Especificidad
+
+.center[
+$\LARGE Especificidad = \frac{TN}{TN + FP}$
+]
 ---
 #Curvas ROC
 
