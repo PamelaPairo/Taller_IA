@@ -399,8 +399,12 @@ $\LARGE Especificidad = \frac{TN}{TN + FP}$
 ---
 #Curvas ROC
 
+Puedo comparar modelos
+
+AUC= área bajo la curva ROC, que también sirve para comparar modelos.
+
 .center[
-<img src="images/roc.png" width="70%"/>
+<img src="images/roc.png" width="65%"/>
 ]
 ---
 # Referencias
