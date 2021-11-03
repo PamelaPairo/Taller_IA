@@ -392,6 +392,12 @@ $\LARGE F1 = 2* \frac{precision * recall}{precision + recall}$
 ]
 
 ---
+#Curvas ROC
+
+.center[
+<img src="images/roc.png" width="70%"/>
+]
+---
 # Referencias
 
 - [Introduction to Logistic Regression](https://towardsdatascience.com/introduction-to-logistic-regression-66248243c148), artículo publicado en Towards to Data Science
