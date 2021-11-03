@@ -327,10 +327,69 @@ class: inverse, middle, center
 
 Durante el proceso de aprendizaje, el modelo **.orange[no debe acceder]** bajo ninguna circunstancia a los datos del conjunto de testeo, sino las estimaciones estarán **.orange[sesgadas].**
 
+El conjunto de validación se utiliza para ajustar los hiperparámetros y luego se hace la selección de modelos.
+
+Las métricas ayudan a capturar objetivos reales en forma cuantitativa (no todos los errores son iguales)
+
 .center[
 <img src="images/split_data.png" width="70%"/>
 ]
 
+---
+
+#Matriz de Confusión
+
+Se quiere que los elementos diagonales tengan valores grandes y los no diagonales valores chicos
+
+.center[
+<img src="images/confusion_matrix.png" width="70%"/>
+]
+---
+#Accuracy
+
+.center[
+$\LARGE Accuracy = \frac{TP + TN}{TP+TN+FP+FN}$
+]
+
+.center[
+<img src="images/matrix.png" width="70%"/>
+]
+
+--
+
+No es adecuado cuando los datos están **.purple[muy desbalanceados.]** Le da mayor importancia a la clase mayoritaria.
+---
+#Precision
+
+.center[
+$\LARGE Precision = \frac{TP}{TP+FP}$
+]
+
+.center[
+<img src="images/matrix.png" width="70%"/>
+]
+
+---
+#Recall (Sensitividad)
+
+Encuentra todos los positivos
+
+.center[
+$\LARGE Recall = \frac{TP}{TP+FN}$
+]
+
+.center[
+<img src="images/matrix.png" width="70%"/>
+]
+
+---
+#F1 Score
+
+Medida armónica entre Precision y recall
+
+.center[
+$\LARGE F1 = 2* \frac{precision * recall}{precision + recall}$
+]
 
 ---
 # Referencias
