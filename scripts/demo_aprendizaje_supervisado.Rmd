@@ -18,23 +18,16 @@ library(workflows)
 
 # Conociendo `tidymodels`
 
-Primero cargamos la base de datos y seleccionamos las variables "Response", "Gender", "Age", "Vintage".
+Primero cargamos la base de datos y seleccionamos las variables "Response", "Gender", "Age", "Vintage" y "Vehicle_Age".
 
 ```{r}
-clientes <-read.csv("data/dataset.csv")
 
-df <- clientes %>% 
-      select ("Response", "Gender", "Age", "Vintage", "Vehicle_Age")
-
-glimpse(df)
 ```
 
 Verificamos el tipo de dato de la variable respuesta, el cual tiene que ser un factor.
 
 ```{r}
-df$Response <- as.factor(df$Response)
 
-class(df$Response)
 ```
 
 ## División del dataset: Entrenamiento y testeo
@@ -45,7 +38,6 @@ Para una correcta interpretación de nuestros resultados vamos a especificar que
 df$Response <- relevel(df$Response, ref = "1")
 levels(df$Response)
 ```
-
 
 ```{r}
 set.seed(123)#setear la semilla

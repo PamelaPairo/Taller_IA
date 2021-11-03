@@ -252,6 +252,15 @@ Se quiere predecir 3 especies de _Iris_ a partir del ancho y largo del sépalo: 
 ]
 
 ---
+# Sobreajuste en los Árboles de Decisión
+
+.bg-washed-light-purple.b--light-purple.ba.bw2.br2.shadow-5.ph2.mt2[
+
+- El error de entrenamiento es siempre cero 
+
+- Poca capacidad de generalización.
+]
+---
 
 ## Hiperparámetro
 
