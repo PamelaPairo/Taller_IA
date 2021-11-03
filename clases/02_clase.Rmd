@@ -149,12 +149,6 @@ Se predice  $y= 0$ si $h_{\theta}(x) < 0.5$
 ---
 class: inverse, middle, center
 
-#`r emo::ji("computer")`
-###Demo Regresión Logística
-
----
-class: inverse, middle, center
-
 # Naive Bayes
 
 ---
@@ -195,12 +189,6 @@ Una segunda asunción, es que **.purple[todos los atributos tienen el mismo efec
 .center[
 $\ P(y|x_1, x_2..x_n)= \LARGE \frac{P(x_1|y) * P(x_n|y)...P(x_1|y)* P(y)}{P(x_1)* P(x_2)...P(x_N)}$
 ]
----
-
-class: inverse, middle, center
-
-#`r emo::ji("computer")`
-###Demo Naive Bayes
 
 ---
 
@@ -238,12 +226,6 @@ Se debe proyectar a una dimensión donde los datos si sean linealmente separable
 **.orange[Tipo de kernels]**: lineal, polinomial, RBF.
 
 .footnote[Imagen extraída de [este link](https://medium.com/analytics-vidhya/how-to-classify-non-linear-data-to-linear-data-bb2df1a6b781)]
----
-class: inverse, middle, center
-
-#`r emo::ji("computer")`
-###Demo SVM
-
 ---
 class: inverse, middle, center
 
@@ -320,7 +302,7 @@ El algoritmo es sencillo, fácil de implementar, fácil de usar y requiere de po
 class: inverse, middle, center
 
 #`r emo::ji("computer")`
-###Demo Árboles de decisión y Random Forest
+###Demo Modelos
 
 ---
 class: inverse, middle, center
@@ -340,8 +322,23 @@ class: inverse, middle, center
 #Métricas
 
 ---
+
+#El conjunto de test
+
+Durante el proceso de aprendizaje, el modelo **.orange[no debe acceder]** bajo ninguna circunstancia a los datos del conjunto de testeo, sino las estimaciones estarán **.orange[sesgadas].**
+
+.center[
+<img src="images/split_data.png" width="70%"/>
+]
+
+
+---
 # Referencias
 
 - [Introduction to Logistic Regression](https://towardsdatascience.com/introduction-to-logistic-regression-66248243c148), artículo publicado en Towards to Data Science
 
+- [Applied Machine Learning](https://rstudio-conf-2020.github.io/applied-ml/Part_6.html#1) dictado en rstudio::conf 2020
 
+- [20 Popular Machine Learning Metrics. Part 1: Classification & Regression Evaluation Metrics](https://towardsdatascience.com/20-popular-machine-learning-metrics-part-1-classification-regression-evaluation-metrics-1ca3e282a2ce)
+
+- [Data preprocessing and resampling using tidymodels](https://www.youtube.com/watch?v=s3TkvZM60iU&ab_channel=JuliaSilge), tutorial en Youtube de Julia Silge

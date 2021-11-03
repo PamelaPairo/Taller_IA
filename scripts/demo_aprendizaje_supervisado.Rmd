@@ -1,0 +1,242 @@
+---
+title: "Aprendizaje Supervisado"
+author: "Pamela Pairo"
+date: "11/02/2021"
+output: rmdformats::readthedown
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+
+library(tidyverse)
+library(discrim)
+library(tidymodels)
+library(workflows)
+```
+
+# Conociendo `tidymodels`
+
+Primero cargamos la base de datos y seleccionamos las variables "Response", "Gender", "Age", "Vintage".
+
+```{r}
+clientes <-read.csv("data/dataset.csv")
+
+df <- clientes %>% 
+      select ("Response", "Gender", "Age", "Vintage", "Vehicle_Age")
+
+glimpse(df)
+```
+
+Verificamos el tipo de dato de la variable respuesta, el cual tiene que ser un factor.
+
+```{r}
+df$Response <- as.factor(df$Response)
+
+class(df$Response)
+```
+
+## División del dataset: Entrenamiento y testeo
+
+Para una correcta interpretación de nuestros resultados vamos a especificar que `1` es nuestra clase positiva (cliente quiere contratar un seguro)
+
+```{r}
+df$Response <- relevel(df$Response, ref = "1")
+levels(df$Response)
+```
+
+
+```{r}
+set.seed(123)#setear la semilla
+
+# Create data split for train and test
+df_split <- initial_split(df,
+                          prop = 0.75)
+
+# Create training data
+df_train <- df_split %>%
+              training()
+
+# Create testing data
+df_test <- df_split %>%
+              testing()
+
+# Number of rows in train and test dataset
+paste0("Total del dataset de entrenamiento: ", nrow(df_train))
+paste0("Total del dataset de testeo: ", nrow(df_test))
+```
+
+## Entrenando modelos con `Tidymodels`
+
+> <i class='fas fa-code-branch pr2'></i> Si no tenés instalado `tidymodels` podés hacerlo corriendo el siguiente código
+
+```
+install.packages("tidymodels")
+
+```
+
+Al igual que `tidyverse`, `tidymodels` está compuesto por un conjunto de paquetes como los siguientes:
+
+- `rsample`: para realizar la división del dataset en entrenamiento, validación y testeo.
+
+- `recipes`: para el preprocesamiento
+
+- `parnship`: para especificar el modelo
+
+- `yardstick`: para evaluar el modelo
+
+# Preprocesamiento de datos usando `recipe`
+
+Vamos a utilizar únicamente 4 variables predictoras del dataset para predecir si los clientes contrarían un seguro para su auto.
+
+```{r}
+recipe_df <-  recipe (Response ~ ., data= df_train) %>% 
+              step_scale(all_numeric_predictors(), -all_outcomes())%>%
+              step_dummy(all_nominal_predictors()) %>% 
+              prep()
+              
+# Bake
+df_train <- bake(recipe_df, new_data=df_train)
+df_test <- bake(recipe_df, new_data=df_test)
+```
+
+# Especificando el modelo
+
+Se puede entrenar cualquier modelo (que este incluído en `tidymodels`) siguiendo los pasos que se muestran a continuación.
+
+1- Especificar el modelo (eg. Regresión logística, Random Forest, SVM, etc)
+
+2- Con `set_engine()` se especifíca la familia de modelos
+
+3- Con `set_mode()` se especifica el tipo de modelo a entrenarse (regresión o clasificación)
+
+4- Usar la función `fit ()` para entrenar el modelo y, dentro de eso, debe proporcionar la notación de la fórmula y el conjunto de datos
+
+
+```{r}
+##Con los hiperparámetros por default
+
+#Regresión Logística
+set.seed(234)
+model_RL<- logistic_reg() %>%
+        # Set the engine
+        set_engine("glm") %>%
+        # Set the mode
+        set_mode("classification")
+
+#Naive Bayes
+set.seed(234)
+model_NB <- naive_Bayes(smoothness = .8) %>%
+            set_mode("classification") %>% 
+            set_engine("naivebayes")
+#SVM
+set.seed(234)
+model_SVM <-
+  svm_rbf() %>%
+  set_mode("classification") %>%
+  set_engine("kernlab")
+
+#Arboles de decisión
+set.seed(234)
+model_TREE <- decision_tree() %>% 
+  set_engine("rpart") %>% 
+  set_mode("classification") 
+
+
+#Random Forest
+set.seed(234)
+model_RF <- rand_forest() %>% 
+  set_engine("ranger") %>% 
+  set_mode("classification") %>% 
+  set_args(trees = 500)
+
+```
+
+# Regresión Logística: Uniendo todo en un _Workflow_
+
+```{r}
+ wf_RL <- workflow() %>% 
+          add_recipe(recipe_df) %>% 
+          add_model(model_RL)
+
+wf_RL
+```
+
+### Entrenando el modelo
+
+```{r}
+RL_fit <-  model_RL %>%
+             fit(Response ~ ., data=df_train) 
+            
+#imprimo el modelo
+tidy(RL_fit)
+```
+
+### Predicción del modelos
+
+```{r}
+# Prediccion de la clase
+pred_class <- predict(RL_fit,
+                      new_data = df_test,
+                      type = "class")
+
+pred_class[1:5,] 
+```
+
+```{r}
+# Predicción de las probabilidades
+pred_proba <- predict(RL_fit,
+                      new_data = df_test,
+                      type = "prob")
+
+pred_proba[1:5,]
+```
+
+```{r}
+
+df_results <- df_test %>%
+  select(Response) %>%
+  bind_cols(pred_class, pred_proba)
+
+df_results[1:5, ]
+```
+
+### Matriz de confusión
+
+```{r}
+conf_mat(df_results, truth = Response,
+         estimate = .pred_class)
+```
+
+### Métricas
+```{r}
+
+custom_metrics <- metric_set(accuracy, sens, spec, precision, recall)
+custom_metrics(df_results,
+               truth = Response,
+               estimate = .pred_class)
+```
+
+# Árboles de decisión
+
+
+## Uniendo todo en un _Workflow_
+
+```{r}
+wf_TREE <- workflow() %>% 
+          add_recipe(recipe_df) %>% 
+          add_model(model_TREE)
+
+wf_TREE
+```
+## Entreno en modelo
+
+```{r}
+TREE_fit <- model_TREE%>%
+  fit(Response ~ ., data = df_train) 
+
+#imprimo el modelo
+TREE_fit
+```
+
