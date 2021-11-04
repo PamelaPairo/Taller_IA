@@ -5,6 +5,7 @@ date: "11/02/2021"
 output: rmdformats::readthedown
 ---
 
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(message = FALSE)
@@ -16,11 +17,20 @@ library(tidymodels)
 library(workflows)
 ```
 
+Shortcut para un nuevo bloque de código `Control+ Alt+ I`
+
 # Conociendo `tidymodels`
 
 Primero cargamos la base de datos y seleccionamos las variables "Response", "Gender", "Age", "Vintage" y "Vehicle_Age".
 
 ```{r}
+
+clientes <- read.csv("data/dataset.csv")
+
+df <- clientes %>%
+        select ("Response", "Gender", "Age", "Vintage", "Vehicle_Age")
+
+head(df)
 
 ```
 
@@ -28,6 +38,7 @@ Verificamos el tipo de dato de la variable respuesta, el cual tiene que ser un f
 
 ```{r}
 
+df$Response <- as.factor(df$Response)
 ```
 
 ## División del dataset: Entrenamiento y testeo
@@ -148,7 +159,7 @@ model_RF <- rand_forest() %>%
 # Regresión Logística: Uniendo todo en un _Workflow_
 
 ```{r}
- wf_RL <- workflow() %>% 
+wf_RL <- workflow() %>% 
           add_recipe(recipe_df) %>% 
           add_model(model_RL)
 
