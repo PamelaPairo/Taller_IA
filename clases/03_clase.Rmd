@@ -96,11 +96,33 @@ Práctica en R.
 
 ---
 
-# Set de testeo y validación
+## Conjunto de testeo
 
 Durante el proceso de aprendizaje, el modelo **.orange[no debe acceder]** bajo ninguna circunstancia a los datos del conjunto de testeo, sino las estimaciones estarán **.orange[sesgadas].**
 
+.center[
+<img src="images/split_data.png" width="70%"/>
+]
+
+
+.bg-washed-light-purple.b--light-purple.ba.bw2.br2.shadow-5.ph3.mt2[
+El objetivo de un modelo de Machine Learning es que generalice bien frente a nuevos datos o datos no vistos por el modelo (set de testeo)
+]
+
+---
+# Conjunto de validación
+
 El conjunto de validación se utiliza para ajustar los hiperparámetros y luego se hace la selección de modelos.
+
+Importante para evitar el overfitting y obtener modelos estables.
+
+1- Selección de hiperparámetros
+
+2- Selección de modelos usando el conjunto de validación
+
+3- Encontrar la mejor configuración de hiperparámetros según la métrica elegida
+
+4- Evaluación final con el conjunto de testeo
 
 ---
 # Muestreo estratificado
@@ -129,8 +151,29 @@ Las métricas ayudan a capturar objetivos reales en forma cuantitativa (no todos
 <img src="images/split_data.png" width="70%"/>
 ]
 ---
+#Métricas para Regresión
 
-#Matriz de Confusión
+**.orange[Mean Square Error (MSE)]**
+
+.center[
+<img src="images/mse.png" width="40%"/>
+]
+
+**.orange[Root Mean Square Error (RMSE)]**
+
+.center[
+<img src="images/rmse.png" width="40%"/>
+]
+
+**.orange[Mean Absolute Error (MAE)]**
+
+.center[
+<img src="images/mae.png" width="40%"/>
+]
+
+---
+
+### Métricas para Clasificación: Matriz de Confusión
 
 Se quiere que los elementos diagonales tengan valores grandes y los no diagonales valores chicos
 
@@ -216,3 +259,5 @@ countdown(minutes = 15, seconds = 0, font_size="7em", color_background = "white"
 # Referencias
 
 - [20 Popular Machine Learning Metrics. Part 1: Classification & Regression Evaluation Metrics](https://towardsdatascience.com/20-popular-machine-learning-metrics-part-1-classification-regression-evaluation-metrics-1ca3e282a2ce)
+
+- [Aprendizaje Automático y las Métricas de Regresión](https://sitiobigdata.com/2018/08/27/machine-learning-metricas-regresion-mse/#)

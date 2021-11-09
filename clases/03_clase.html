@@ -102,11 +102,33 @@ Práctica en R.
 
 ---
 
-# Set de testeo y validación
+## Conjunto de testeo
 
 Durante el proceso de aprendizaje, el modelo **.orange[no debe acceder]** bajo ninguna circunstancia a los datos del conjunto de testeo, sino las estimaciones estarán **.orange[sesgadas].**
 
+.center[
+&lt;img src="images/split_data.png" width="70%"/&gt;
+]
+
+
+.bg-washed-light-purple.b--light-purple.ba.bw2.br2.shadow-5.ph3.mt2[
+El objetivo de un modelo de Machine Learning es que generalice bien frente a nuevos datos o datos no vistos por el modelo (set de testeo)
+]
+
+---
+# Conjunto de validación
+
 El conjunto de validación se utiliza para ajustar los hiperparámetros y luego se hace la selección de modelos.
+
+Importante para evitar el overfitting y obtener modelos estables.
+
+1- Selección de hiperparámetros
+
+2- Selección de modelos usando el conjunto de validación
+
+3- Encontrar la mejor configuración de hiperparámetros según la métrica elegida
+
+4- Evaluación final con el conjunto de testeo
 
 ---
 # Muestreo estratificado
@@ -135,8 +157,29 @@ Las métricas ayudan a capturar objetivos reales en forma cuantitativa (no todos
 &lt;img src="images/split_data.png" width="70%"/&gt;
 ]
 ---
+#Métricas para Regresión
 
-#Matriz de Confusión
+**.orange[Mean Square Error (MSE)]**
+
+.center[
+&lt;img src="images/mse.png" width="40%"/&gt;
+]
+
+**.orange[Root Mean Square Error (RMSE)]**
+
+.center[
+&lt;img src="images/rmse.png" width="40%"/&gt;
+]
+
+**.orange[Mean Absolute Error (MAE)]**
+
+.center[
+&lt;img src="images/mae.png" width="40%"/&gt;
+]
+
+---
+
+### Métricas para Clasificación: Matriz de Confusión
 
 Se quiere que los elementos diagonales tengan valores grandes y los no diagonales valores chicos
 
@@ -209,9 +252,9 @@ AUC= área bajo la curva ROC, que también sirve para comparar modelos.
 ---
 class: inverse, middle, center
 
-## Descanso 🎂 ☕🧉
+## Descanso 🎉 ☕🧉
 
-<div class="countdown" id="timer_618aa2c3" style="right:0;bottom:0;font-size:7em;" data-warnwhen="0">
+<div class="countdown" id="timer_618ad738" style="right:0;bottom:0;font-size:7em;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">15</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -219,6 +262,8 @@ class: inverse, middle, center
 # Referencias
 
 - [20 Popular Machine Learning Metrics. Part 1: Classification &amp; Regression Evaluation Metrics](https://towardsdatascience.com/20-popular-machine-learning-metrics-part-1-classification-regression-evaluation-metrics-1ca3e282a2ce)
+
+- [Aprendizaje Automático y las Métricas de Regresión](https://sitiobigdata.com/2018/08/27/machine-learning-metricas-regresion-mse/#)
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
