@@ -80,6 +80,8 @@ colors = c(
 class: middle, center
 # En la clase de hoy...
 
+--
+
 ### En la primera parte:
 
 Técnicas de resampling
@@ -255,6 +257,12 @@ countdown(minutes = 15, seconds = 0, font_size="7em", color_background = "white"
 
 ```
 
+---
+
+class: inverse, middle, center
+
+#`r emo::ji("computer")`
+#Manos a R!!
 ---
 # Referencias
 
