@@ -1,0 +1,195 @@
+---
+title: "Clasificación"
+author: "Pamela Pairo"
+date: "11/10/2021"
+output: rmdformats::readthedown
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+
+library(tidyverse)
+library(tidymodels)
+library(workflows)
+library(MASS) #el dataset se encuentra en esta librería 
+```
+
+Shortcut para un nuevo bloque de código `Control+ Alt+ I`
+
+# Conociendo `tidymodels`
+
+Cargamos la base de datos de Boston. Construiremos un modelo de regresión que relacione el valor mediano de las viviendas ocupadas por el propietario (medv) como respuesta con las variables restantes como predictores.
+
+```{r}
+data(Boston)
+```
+
+
+## División del dataset: Entrenamiento y testeo
+
+
+```{r}
+set.seed(123)#setear la semilla
+
+# Create data split for train and test
+df_split <- initial_split(Boston,
+                          prop = 0.75)
+
+# Create training data
+df_train <- df_split %>%
+              training()
+
+# Create testing data
+df_test <- df_split %>%
+              testing()
+
+# Number of rows in train and test dataset
+paste0("Total del dataset de entrenamiento: ", nrow(df_train))
+paste0("Total del dataset de testeo: ", nrow(df_test))
+```
+
+## Entrenando modelos con `Tidymodels`
+
+Al igual que `tidyverse`, `tidymodels` está compuesto por un conjunto de paquetes como los siguientes:
+
+- `rsample`: para realizar la división del dataset en entrenamiento, validación y testeo.
+
+- `recipes`: para el preprocesamiento
+
+- `parnship`: para especificar el modelo
+
+- `yardstick`: para evaluar el modelo
+
+# Preprocesamiento de datos usando `recipe`
+
+
+
+```{r}
+recipe_df <-  recipe (medv ~ ., data= df_train) %>% 
+              step_corr(all_predictors()) %>%
+              step_dummy(all_nominal_predictors()) %>% 
+              prep()
+              
+# Bake
+df_train <- bake(recipe_df, new_data=df_train)
+df_test <- bake(recipe_df, new_data=df_test)
+```
+
+# Especificando el modelo y tuneo de hiperparámetros
+
+Se puede entrenar cualquier modelo (que este incluído en `tidymodels`) siguiendo los pasos que se muestran a continuación.
+
+1- Especificar el modelo (eg. Regresión logística, Random Forest, SVM, etc)
+
+2- Con `set_engine()` se especifíca la familia de modelos
+
+3- Con `set_mode()` se especifica el tipo de modelo a entrenarse (regresión o clasificación)
+
+4- Usar la función `fit ()` para entrenar el modelo y, dentro de eso, debe proporcionar la notación de la fórmula y el conjunto de datos
+
+Con `tune`, se especifica qué hiperparámetros van a ser tuneados.
+
+```{r}
+#Arboles de decisión
+set.seed(234)
+model_TREE <- decision_tree(tree_depth = tune(),  min_n = tune()) %>% 
+  set_engine("rpart") %>% 
+  set_mode("regression")
+
+```
+
+## Uniendo todo en un _Workflow_
+
+```{r}
+wf_TREE <- workflow() %>% 
+          add_recipe(recipe_df) %>% 
+          add_model(model_TREE)
+        
+```
+
+## Cross-validation
+
+```{r}
+set.seed(1234)
+
+fold_df <- vfold_cv(df_train, v=3)
+fold_df$splits
+
+```
+
+```{r}
+param_grid <- grid_regular(tree_depth(), min_n(), levels = 5)
+param_grid
+```
+
+
+
+```{r}
+#doParallel::registerDoParallel() #paralelizamos los cálculos
+set.seed(345)
+
+tune_DF <- tune_grid(
+  model_TREE,
+  medv~ .,
+  resamples = fold_df, 
+  grid = param_grid, 
+  metrics = metric_set(rmse)
+)
+
+tune_DF
+```
+
+Las métricas provienen del rendimiento de la validación cruzada a través de los diferentes valores de los parámetros.
+```{r}
+collect_metrics(tune_DF)
+```
+
+```{r}
+autoplot(tune_DF)
+```
+
+## Entreno en modelo
+
+```{r}
+param_final <- tune_DF %>%
+  select_best(metric = "rmse")
+param_final
+```
+
+#Evaluamos en test
+
+```{r}
+wf_TREE <- wf_TREE %>%
+  finalize_workflow(param_final)
+```
+
+```{r}
+rf_fit <- wf_TREE %>%
+  # fit on the training set and evaluate on test set
+  last_fit(df_split)
+
+rf_fit
+```
+
+```{r}
+test_performance <- rf_fit %>% collect_metrics()
+test_performance
+```
+
+```{r}
+# generate predictions from the test set
+test_predictions <- rf_fit %>% collect_predictions()
+test_predictions
+```
+
+```{r}
+test_predictions %>%
+  ggplot(aes(medv, .pred)) +
+  geom_abline(lty = 2, color = "gray50") +
+  geom_point(alpha = 0.5, color = "midnightblue") +
+  coord_fixed()
+```
+

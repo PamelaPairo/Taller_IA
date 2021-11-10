@@ -199,6 +199,8 @@ No es adecuado cuando los datos están **.purple[muy desbalanceados.]** Le da ma
 ---
 #Precision
 
+A mas precisión menos errores de tipo I (falsos positivos)
+
 .center[
 $\LARGE Precision = \frac{TP}{TP+FP}$
 ]
@@ -210,7 +212,7 @@ $\LARGE Precision = \frac{TP}{TP+FP}$
 ---
 #Recall (Sensitividad)
 
-Encuentra todos los positivos
+Encuentra todos los positivos. Utilizar cuando se quiere minimizar los falsos negativos.
 
 .center[
 $\LARGE Recall = \frac{TP}{TP+FN}$
@@ -264,6 +266,13 @@ class: inverse, middle, center
 #`r emo::ji("computer")`
 #Manos a R!!
 ---
+.pull-left[
+
+]
+
+.pull-right[
+
+]
 # Referencias
 
 - [20 Popular Machine Learning Metrics. Part 1: Classification & Regression Evaluation Metrics](https://towardsdatascience.com/20-popular-machine-learning-metrics-part-1-classification-regression-evaluation-metrics-1ca3e282a2ce)
