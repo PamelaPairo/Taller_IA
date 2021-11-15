@@ -1,5 +1,5 @@
 ---
-title: "Clasificación"
+title: "Regresión"
 author: "Pamela Pairo"
 date: "11/10/2021"
 output: rmdformats::readthedown
@@ -65,12 +65,16 @@ Al igual que `tidyverse`, `tidymodels` está compuesto por un conjunto de paquet
 
 # Preprocesamiento de datos usando `recipe`
 
+```{r}
+df_train$chas <- as.factor(df_train$chas)
+```
 
 
 ```{r}
 recipe_df <-  recipe (medv ~ ., data= df_train) %>% 
-              step_corr(all_predictors()) %>%
-              step_dummy(all_nominal_predictors()) %>% 
+              step_corr(all_numeric_predictors()) %>%
+              step_scale(all_numeric_predictors(), -all_outcomes())%>%
+              #step_dummy(all_nominal_predictors()) %>% 
               prep()
               
 # Bake
@@ -107,7 +111,7 @@ model_TREE <- decision_tree(tree_depth = tune(),  min_n = tune()) %>%
 wf_TREE <- workflow() %>% 
           add_recipe(recipe_df) %>% 
           add_model(model_TREE)
-        
+       
 ```
 
 ## Cross-validation
@@ -128,7 +132,7 @@ param_grid
 
 
 ```{r}
-#doParallel::registerDoParallel() #paralelizamos los cálculos
+doParallel::registerDoParallel() #paralelizamos los cálculos
 set.seed(345)
 
 tune_DF <- tune_grid(
@@ -136,13 +140,14 @@ tune_DF <- tune_grid(
   medv~ .,
   resamples = fold_df, 
   grid = param_grid, 
-  metrics = metric_set(rmse)
+  metrics = metric_set(rmse, rsq, ccc)
 )
 
 tune_DF
 ```
 
 Las métricas provienen del rendimiento de la validación cruzada a través de los diferentes valores de los parámetros.
+
 ```{r}
 collect_metrics(tune_DF)
 ```
@@ -191,5 +196,18 @@ test_predictions %>%
   geom_abline(lty = 2, color = "gray50") +
   geom_point(alpha = 0.5, color = "midnightblue") +
   coord_fixed()
+```
+
+#Importancia de las variables
+
+```{r}
+library(vip)
+
+final <- decision_tree(tree_depth = 8, min_n = 21) %>%
+  set_engine("rpart") %>%
+  set_mode("regression")
+
+final_fit <- fit(final, medv ~ ., data = df_test)
+vip(final_fit)
 ```
 

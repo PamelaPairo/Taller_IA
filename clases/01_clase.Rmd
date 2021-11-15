@@ -63,7 +63,7 @@ library(xaringanthemer)
 style_mono_accent(
   base_color = "#1c5253",
   header_font_google = google_font("Josefin Sans"),
-  text_font_google   = google_font("PT Sans", "300", "300i"),
+  text_font_google   = google_font("Open Sans", "400", "300i"),
   code_font_google   = google_font("Fira Mono")
 
 )
@@ -76,15 +76,15 @@ class: inverse
 
 - Clase 1: Conceptos importantes. Clasificación vs. Regresión. Análisis exploratorio y curación. Ingeniería de features. Sobreajuste. Trade off Sesgo-Varianza. Entrenamiento, evaluación y testeo. Regresión lineal y polinomial. Ejercitación
 
-- Clase 2: Árboles de decisión.Random Forest. SVM. Regresión Logística. Naïve Bayes. Hiperparámetros. Métricas. Ejercitación
+- Clase 2: Árboles de decisión.Random Forest. SVM. Regresión Logística. Naïve Bayes. Hiperparámetros. Ejercitación
 
-- Clase 3: Validación cruzada. Redes neuronales. Selección de modelos. Ejercitación.
+- Clase 3: Validación cruzada. Métricas. Selección de modelos. Ejercitación.
 
 - Clase 4: Clustering. K-means. PCA. Embeddings. Ejercitación
 
 - Clase 5: Consideraciones finales. Desbalanceo de clases. Problemas multiclase. Consultas para el trabajo final.
 
-- Clase 6: Presentación de los trabajos finales
+- Clase 6: Clase de consultas
 
 ---
 ## Conceptos Importantes `r emo::ji("bulb")`
