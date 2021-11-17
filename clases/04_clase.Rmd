@@ -131,7 +131,9 @@ En el aprendizaje no supervisado, no se proporcionan etiquetas y el algoritmo de
 
 - Para conocer el dataset
 
-- Refinamiento de clases 
+- Refinamiento de clases
+
+- Detección de outliers
 
 .bg-washed-light-purple.b--light-purple.ba.bw2.br2.shadow-5.ph3.mt2[
 
@@ -158,3 +160,98 @@ Se itera varias veces
 --
 
 - **.purple[Detección de comunidades]**
+
+---
+# Clustering
+
+Se agrupan los datos de acuerdo a las variables seleccionadas y alguna medida de distancia.
+
+**.purple[Pre-procesamiento de datos]**: ¿Conviene o no estandarizar los datos? ¿Cómo proceder con los datos faltantes? 
+
+###.center[¿Qué medida de distancia elegir?]
+
+---
+
+## Medidas de similitud-disimilitud entre objetos
+
+- El primer paso consiste en medir distancias (medida de disimilitud) o similitud entre objetos en un espacio multidimensional.
+
+- La distancia o disimilitud de un objeto consigo mismo vale 0, así como la medida de similitud vale 1
+
+- Distintas medidas de distancia según si se tienen variables continuas o discretas.
+
+---
+
+## Medidas de similitud-disimilitud entre objetos
+
+**.purple[Métricas para variables continuas:]**
+
+- Distancia euclídea
+
+.center[
+<img src="images/euclidea.png" width="60%"/>
+]
+
+- Distancia de Manhattan o city block
+
+.center[
+<img src="images/manhattan.png" width="40%"/>
+]
+
+---
+## Medidas de similitud-disimilitud entre objetos
+
+**.purple[Métricas para variables cualitativas:]**
+
+- Chi-cuadrado
+
+- Coeficiente de Jaccard(para v-dicotómicas: presencia-ausencia), similitud
+
+---
+## Métodos de agrupamiento (clustering) no jerárquico
+
+**.purple[Kmeans]:**
+
+La cantidad de grupos **_k_** se decide **a priori**
+
+1- Se eligen kpuntos arbitrariamente (semillas), y se los considera como centroides de los k clusters
+
+2- Se asignan los objetos al centroides más cercano, 
+formando kclusters
+
+3- Se calculan los centroides de estos clustersarbitrarios
+
+4- Se realiza una nueva partición de los objetos, asignándolos al centroide más cercano
+
+5- El proceso se repite hasta que no hay pasajes de individuos de un cluster a otro
+
+---
+# Kmeans
+
+.center[
+<img src="images/kmeans.png" width="90%"/>
+]
+
+---
+
+#Método del codo
+
+.center[
+<img src="images/codo.png" width="90%"/>
+]
+
+---
+# Comentarios 
+
+- Ojo con clusters conteniendo sólo uno o dos objetos ¿Posibles outliers? Extraer y repetir el análisis
+
+- Hay muchas decisiones subjetivas: variables, medida de di(similitud), método de agrupamiento… que impactan fuertemente en los resultados.
+
+- Existen muchas técnicas más Mean Shift, GMM, Clustering jerárquico, etc.
+
+---
+# Reducción de dimensionalidad
+
+**.purple[PCA]**
+
+**.purple[T-sne]**
