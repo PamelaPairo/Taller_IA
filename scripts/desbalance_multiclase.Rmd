@@ -1,0 +1,80 @@
+---
+title: "demo_multiclase"
+author: "Pamela Pairo"
+date: "11/23/2021"
+output: rmdformats::readthedown
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+
+library(tidyverse)
+library(tidymodels)
+library(workflows)
+library(themis)
+```
+
+```{r}
+df <- read.csv("data/dataset.csv") 
+
+df$id <-NULL
+
+glimpse(df)
+```
+
+```{r}
+ df <- df %>% 
+      mutate(Response= as.factor(Response), Previously_Insured= as.factor(Previously_Insured), Driving_License= as.factor(Driving_License))
+```
+
+Se seleccionan 1000 filas de manera aleatoria
+
+```{r}
+set.seed(123)
+df <-df[sample(nrow(df), 1000), ] 
+rownames(df) <- 1:nrow(df)
+  
+```
+
+Visualizando el desbalance de clases 
+```{r}
+g <- ggplot(df, aes(Response))
+g + geom_bar()
+```
+```{r}
+set.seed(123)
+df_split <- initial_split(df, strata = Response, prop = 0.75)
+df_train <- training(df_split)
+df_test <- testing(df_split)
+```
+
+Cross-validation
+
+
+```{r}
+set.seed(123)
+df_folds <- vfold_cv(df_train, strata = Response)
+df_folds
+```
+
+Preprocesamiento de datos
+
+```{r}
+recipe_df <- recipe(Response ~ ., data = df_train) %>%
+  step_scale(all_numeric_predictors(), -all_outcomes())%>%
+              step_corr(all_numeric_predictors()) %>% 
+              step_dummy(all_nominal_predictors()) %>% 
+             step_smote(Response) %>% 
+              prep()
+```
+
+```{r}
+rf_spec <- rand_forest(trees = 1000) %>%
+  set_mode("classification") %>%
+  set_engine("ranger")
+
+rf_spec
+```
+
