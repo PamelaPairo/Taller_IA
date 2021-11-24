@@ -218,7 +218,9 @@ library(tidymodels)
 library(themis)
 
 ```
+- Hacer el split de los datos **ANTES** de probar técnicas de sobremuestreo submuestreo.
 
+Si se hace lo contrario, puede ocurrir que los mismos datos estén presentes tanto en el conjunto de entrenamiento como en el conjunto de testeo, causando el _overfitting_ y la baja generalización del modelo.
 
 ---
 # Referencias
@@ -228,3 +230,5 @@ library(themis)
 - [Tratamiento de clases desbalanceadas](https://machinelearningparatodos.com/tratamiento-de-clases-desbalanceadas/)
 
 - [Practical Guide to deal with Imbalanced Classification Problems in R](https://www.analyticsvidhya.com/blog/2016/03/practical-guide-deal-imbalanced-classification-problems/)
+
+- [Themis](https://themis.tidymodels.org/)
