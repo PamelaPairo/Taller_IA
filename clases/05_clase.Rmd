@@ -15,7 +15,7 @@ class: title-slide, center, middle
 background-image: url(images/portada.jpg)
 background-size: cover
 
-#Clase 4: Desbalance de datos
+#Clase 5: Desbalance de datos
 ### Pamela E. Pairo
 
 ```{r setup, include = FALSE}
@@ -150,7 +150,7 @@ class: middle, center
 
 # Cambiar la métrica de evaluación
 
-**.purple[Accuaracy]** no es la métrica adecuada cuando se tiene un dataset desbalanceado.
+**.purple[Accuracy]** no es la métrica adecuada cuando se tiene un dataset desbalanceado.
 
 En su lugar, es mejor utilizar métricas que tengan más en cuenta los datos de las clases minoritarias como son la f1, la sensitividad o la precisión.
 
