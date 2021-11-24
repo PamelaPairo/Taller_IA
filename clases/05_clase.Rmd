@@ -15,7 +15,7 @@ class: title-slide, center, middle
 background-image: url(images/portada.jpg)
 background-size: cover
 
-#Clase 4: Desbalanceo de datos y Problemas multiclase
+#Clase 4: Desbalance de datos
 ### Pamela E. Pairo
 
 ```{r setup, include = FALSE}
@@ -124,6 +124,107 @@ El término .purple[desbalance] se refiere a la disparidad encontrada en la vari
 
 ---
 
+class: middle, center
+
 # Algunas formas de lidiar con el desbalance
 
+`r emo::ji("heavy_check_mark")` Cambiar la métrica de evaluación
 
+--
+
+`r emo::ji("heavy_check_mark")` Cambiar el algoritmo
+
+--
+
+`r emo::ji("heavy_check_mark")` Sobremuestrear la clase minoritaria
+
+--
+
+`r emo::ji("heavy_check_mark")` Submuestrear la clase mayoritaria
+
+--
+
+`r emo::ji("heavy_check_mark")` Generación de muestras sintéticas
+
+---
+
+# Cambiar la métrica de evaluación
+
+**.purple[Accuaracy]** no es la métrica adecuada cuando se tiene un dataset desbalanceado.
+
+En su lugar, es mejor utilizar métricas que tengan más en cuenta los datos de las clases minoritarias como son la f1, la sensitividad o la precisión.
+
+- **.orange[Matriz de confusión]**
+
+- **.orange[Precision]**: el número de verdaderos positivos (TP) dividido por todas las predicciones positivas (TP+ FP). La baja precisión indica un alto número de falsos positivos.
+
+- **.orange[Recall o Sensibilidad]**: el número de verdaderos positivos (TP) dividido por el número de valores positivos en los datos de la prueba (TP+ FN). Se la denomina también Tasa de verdaderos positivos. Valores bajos indican una gran cantidad de falsos negativos.
+
+- **.orange[F1]**: el promedio ponderado de **.orange[Precision]** y **.orange[Recall]**
+
+---
+# Cambiar el algoritmo
+
+.bg-washed-light-purple.b--light-purple.ba.bw2.br2.shadow-5.ph3.mt2[
+Es una buena práctica probar varios algoritmos en nuestro problema de clasificación con desbalanceo de datos.
+]
+
+---
+
+# Sobremuestrear la clase minoritaria
+
+.bg-washed-light-purple.b--light-purple.ba.bw2.br2.shadow-5.ph3.mt2[
+El sobremuestreo se puede definir como agregar más copias de la clase minoritaria. 
+
+Puede ser una buena opción cuando no se tiene una gran cantidad de datos con los que trabajar.
+]
+
+---
+
+# Submuestrear la clase mayoritaria
+
+.bg-washed-light-purple.b--light-purple.ba.bw2.br2.shadow-5.ph3.mt2[
+
+El submuestreo se puede definir como eliminar algunas observaciones de la clase mayoritaria. 
+
+Puede ser una buena opción cuando se tiene una cantidad grande de datos (ej. millones de datos). 
+
+.orange[Desventaja] : se está eliminando información que puede ser valiosa. Esto podría dar lugar a un ajuste inadecuado y una mala generalización del conjunto de testeo.
+
+]
+
+---
+# Generación de muestras sintéticas
+
+.bg-washed-light-purple.b--light-purple.ba.bw2.br2.shadow-5.ph3.mt2[
+
+SMOTE or Synthetic Minority Oversampling Technique
+
+SMOTE usa un algoritmo de vecinos más cercanos (KNN) para generar datos nuevos y sintéticos que podemos usar para entrenar nuestro modelo.
+Nuevamente, es importante generar las nuevas muestras solo en el conjunto de entrenamiento para garantizar que nuestro modelo se generalice bien a los datos invisibles.
+
+]
+
+---
+
+#Tener en cuenta
+
+- En `R`, necesitamos instalar el siguiente paquete
+
+```
+install.packages("themis")
+
+library(tidymodels)
+library(themis)
+
+```
+
+
+---
+# Referencias
+
+- [Artículo de Towards to Data Science](https://towardsdatascience.com/methods-for-dealing-with-imbalanced-data-5b761be45a18)
+
+- [Tratamiento de clases desbalanceadas](https://machinelearningparatodos.com/tratamiento-de-clases-desbalanceadas/)
+
+- [Practical Guide to deal with Imbalanced Classification Problems in R](https://www.analyticsvidhya.com/blog/2016/03/practical-guide-deal-imbalanced-classification-problems/)
