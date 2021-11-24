@@ -1,0 +1,225 @@
+---
+title: "demo_multiclase"
+author: "Pamela Pairo"
+date: "11/23/2021"
+output: rmdformats::readthedown
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+
+library(tidyverse)
+library(tidymodels)
+library(workflows)
+library(themis)# para trabajar con datos desbalanceados
+```
+
+# Datos desbalanceados
+
+```{r}
+df <- read.csv("data/dataset.csv") 
+
+df$id <-NULL
+
+glimpse(df)
+```
+
+```{r}
+ df <- df %>% 
+  mutate_if(is.character, factor) %>% 
+      mutate(Response= as.factor(Response), Previously_Insured= as.factor(Previously_Insured), Driving_License= as.factor(Driving_License))
+  
+```
+
+Seteamos que 1 es la clase positiva
+```{r}
+df$Response <- relevel(df$Response, ref = "1")
+levels(df$Response)
+```
+
+Se seleccionan 1000 filas de manera aleatoria
+
+```{r}
+set.seed(123)
+df <-df[sample(nrow(df), 1000), ] 
+rownames(df) <- 1:nrow(df) #se renumeran las filas
+```
+
+
+Visualizando el desbalance de clases 
+```{r}
+g <- ggplot(df, aes(Response))
+g + geom_bar()
+```
+## Sin aplicar ninguna técnica para el desbalanceo de datos
+
+```{r}
+set.seed(123)
+df_split <- initial_split(df, strata = Response, prop = 0.7)
+df_train <- training(df_split)
+df_test <- testing(df_split)
+```
+
+Cross-validation
+
+```{r}
+set.seed(123)
+df_folds <- vfold_cv(df_train, v=3, strata = Response)
+df_folds
+```
+
+Preprocesamiento de datos
+
+```{r}
+recipe_df <- recipe(Response ~ ., data = df_train) %>%
+  step_scale(all_numeric_predictors(), -all_outcomes())%>%
+             step_dummy(all_nominal_predictors(), -all_outcomes()) %>%              
+              prep()
+
+```
+
+Random Forest
+
+```{r}
+rf_spec <- rand_forest() %>%
+  set_mode("classification") %>%
+  set_engine("ranger")
+
+rf_spec
+```
+
+Armamos el workflow
+
+```{r}
+df_wf <- workflow() %>%
+  add_recipe(recipe_df)
+
+df_wf
+```
+
+Entrenamos el modelo
+```{r}
+metrics <- metric_set(accuracy, sensitivity, precision)
+
+doParallel::registerDoParallel()
+
+rf_rs <- df_wf %>%
+  add_model(rf_spec) %>%
+  fit_resamples(
+    resamples = df_folds,
+    metrics = metrics,
+    control = control_resamples(save_pred = TRUE)
+  )
+
+rf_rs
+```
+
+Métricas
+```{r}
+collect_metrics(rf_rs)
+```
+
+Evaluando el modelo
+
+```{r}
+df_final <- df_wf %>%
+  add_model(rf_spec) %>%
+  last_fit(df_split)
+
+df_final
+```
+Matriz de Confusión
+
+```{r}
+collect_predictions(df_final) %>%
+  conf_mat(Response, .pred_class)
+```
+
+Métricas del modelo final
+```{r}
+collect_metrics(df_final)
+```
+
+```{r}
+collect_predictions(df_final) %>%
+  sensitivity(Response, .pred_class)
+```
+
+## Considerando el desbalance de clases
+
+El paquete `themis` ofrece las siguientes técnicas para tratar con datos desbalanceados. Todos aplicables para problemas multiclase menos `step_rose()`
+
+- `step_upsample()`: Random minority over-sampling with replacement
+
+- `step_smote()`: Synthetic Minority Over-sampling Technique
+
+- `step_downsample()`
+
+- `step_rose()`: Generation of synthetic data by Randomly Over Sampling Examples
+
+```{r}
+recipe_df_over <- recipe(Response ~ ., data = df_train) %>%
+  step_scale(all_numeric_predictors(), -all_outcomes())%>%
+             step_dummy(all_nominal_predictors(), -all_outcomes()) %>%
+  step_upsample(Response) %>% #Sobremuestreo
+              prep()
+
+```
+
+
+Armamos el workflow
+
+```{r}
+df_wf_over <- workflow() %>%
+  add_recipe(recipe_df_over)
+
+```
+
+Se entrena el modelo
+```{r}
+
+doParallel::registerDoParallel()
+
+rf_rs_over <- df_wf_over %>%
+  add_model(rf_spec) %>%
+  fit_resamples(
+    resamples = df_folds,
+    metrics = metrics,
+    control = control_resamples(save_pred = TRUE)
+  )
+
+rf_rs_over
+```
+
+Métricas
+```{r}
+collect_metrics(rf_rs_over)
+```
+
+Evaluando el modelo
+
+```{r}
+df_final_over <- df_wf_over %>%
+  add_model(rf_spec) %>%
+  last_fit(df_split)
+
+df_final_over
+```
+
+Matriz de Confusión
+
+```{r}
+collect_predictions(df_final_over) %>%
+  conf_mat(Response, .pred_class)
+```
+
+Métricas modelo final
+
+```{r}
+collect_predictions(df_final_over) %>%
+  sensitivity(Response, .pred_class)
+```
+
+
