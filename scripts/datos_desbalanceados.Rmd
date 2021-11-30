@@ -1,5 +1,5 @@
 ---
-title: "demo_multiclase"
+title: "Desbalance de datos"
 author: "Pamela Pairo"
 date: "11/23/2021"
 output: rmdformats::readthedown
@@ -21,8 +21,6 @@ library(themis)# para trabajar con datos desbalanceados
 ```{r}
 df <- read.csv("data/dataset.csv") 
 
-df$id <-NULL
-
 glimpse(df)
 ```
 
@@ -42,9 +40,11 @@ levels(df$Response)
 Se seleccionan 1000 filas de manera aleatoria
 
 ```{r}
-set.seed(123)
+set.seed(123)#setear la semilla
+
 df <-df[sample(nrow(df), 1000), ] 
 rownames(df) <- 1:nrow(df) #se renumeran las filas
+df$id <-NULL #eliminamos columna id
 ```
 
 
@@ -100,6 +100,7 @@ df_wf
 ```
 
 Entrenamos el modelo
+
 ```{r}
 metrics <- metric_set(accuracy, sensitivity, precision)
 
@@ -138,6 +139,7 @@ collect_predictions(df_final) %>%
 ```
 
 Métricas del modelo final
+
 ```{r}
 collect_metrics(df_final)
 ```
@@ -221,5 +223,7 @@ Métricas modelo final
 collect_predictions(df_final_over) %>%
   sensitivity(Response, .pred_class)
 ```
-
+```{r}
+collect_metrics(df_final_over)
+```
 

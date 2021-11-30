@@ -103,7 +103,7 @@ head (final_df, 10)
 
 En el caso de tener valores faltantes (NA), es importante analizar su distribución y así determinar la mejor forma de preprocesarlos.
 
-Puede ocurrir que un _feature_ posea muchos datos faltantes por lo que quizas convenga eliminar esa caracterisca.
+Puede ocurrir que un _feature_ posea muchos datos faltantes por lo que quizas convenga eliminar esa caracteristica.
 
 Si hay datos faltantes corresponde hacer una **imputación**.
 
