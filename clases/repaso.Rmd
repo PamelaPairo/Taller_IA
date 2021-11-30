@@ -254,5 +254,7 @@ library(factoextra)#PCA
 
 ```
 ]
+---
 
+#Métricas
 
