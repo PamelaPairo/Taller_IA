@@ -35,7 +35,7 @@ class: title-slide, center, middle
 background-image: url(images/portada.jpg)
 background-size: cover
 
-#Clase 4: Desbalance de datos
+#Clase 5: Desbalance de datos
 ### Pamela E. Pairo
 
 
@@ -154,7 +154,7 @@ class: middle, center
 
 # Cambiar la métrica de evaluación
 
-**.purple[Accuaracy]** no es la métrica adecuada cuando se tiene un dataset desbalanceado.
+**.purple[Accuracy]** no es la métrica adecuada cuando se tiene un dataset desbalanceado.
 
 En su lugar, es mejor utilizar métricas que tengan más en cuenta los datos de las clases minoritarias como son la f1, la sensitividad o la precisión.
 
@@ -205,7 +205,8 @@ Puede ser una buena opción cuando se tiene una cantidad grande de datos (ej. mi
 SMOTE or Synthetic Minority Oversampling Technique
 
 SMOTE usa un algoritmo de vecinos más cercanos (KNN) para generar datos nuevos y sintéticos que podemos usar para entrenar nuestro modelo.
-Nuevamente, es importante generar las nuevas muestras solo en el conjunto de entrenamiento para garantizar que nuestro modelo se generalice bien a los datos invisibles.
+
+Se genera un conjunto aleatorio de observaciones de la clases minoritaria para cambiar el sesgo de aprendizaje del clasificador hacia la clase minoritaria.
 
 ]
 
