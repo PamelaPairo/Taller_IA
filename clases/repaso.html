@@ -81,26 +81,6 @@ top:1em;right:1em;
 
 ---
 
-class: middle, center
-# En la clase de hoy...
-
---
-
-### En la primera parte:
-
-Desbalance de clases en problemas de clasificación
-
-Consignas Trabajo Final
---
-
-### **.orange[Recreo]** ☕🧉
-
---
-
-Práctica en R.
-
----
-
 class: inverse
 
 ## Hoja de Ruta
@@ -261,8 +241,54 @@ library(factoextra)#PCA
 ]
 ---
 
+## Conjuntos de validación y testeo
+
+.bg-washed-light-purple.b--light-purple.ba.bw2.br2.shadow-5.ph3.mt3[
+El objetivo de un modelo de Machine Learning es que generalice bien frente a nuevos datos o datos no vistos por el modelo (set de testeo)
+]
+
+.center[&lt;img src="images/dataset.png" width="48%"/&gt;]
+
+**.orange[Conjunto de validación]** nos sirve para hacer el tuneo de **.orange[hiperparámetros]** y la selección de modelos.
+
+**.orange[Conjunto de testeo]** se utiliza para medir la performance del modelo mediante **.orange[métricas]**
+
+.right[
+Imagen extraída de [aquí](https://www.machinecurve.com/index.php/2020/11/16/how-to-easily-create-a-train-test-split-for-your-machine-learning-model/#train-test-split-for-a-multilabel-dataset)
+]
+
+---
 #Métricas
 
+.pull-left[
+
+###Regresión
+
+- Mean Square Error (MSE)
+
+- Root Mean Square Error (RMSE)
+
+- Mean Absolute Error (MAE)
+
+.center[&lt;img src="images/yardstick.png" width="45%"/&gt;]
+]
+
+.pull-right[
+
+###Clasificación
+
+- Matriz de Confusión
+
+- Accuracy
+
+- Precision
+
+- Recall
+
+- F1
+
+- Curvas ROC y AUC
+]
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
