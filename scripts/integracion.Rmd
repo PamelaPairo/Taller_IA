@@ -59,6 +59,7 @@ col="orange",
 border="brown"
 )
 ```
+
 ¿Hay alguna relación entre la cantidad de ventas (variable High) y el precio de los asientos para autos para bebés?
 
 ```{r}
@@ -70,6 +71,7 @@ col="orange",
 border="brown"
 )
 ```
+
 ¿Cómo es la distribución del promedio de edades de la población local de los establecimientos que venden los asientos para bebes?
 
 ```{r}
@@ -93,6 +95,7 @@ numericals <- select_if(Carseats, is.numeric)
 cormat <- round(x = cor(numericals), digits = 2)
 ggcorrplot::ggcorrplot(cor(numericals))
 ```
+
 ¿Hay desbalance en la variable respuesta?
 
 ```{r}
@@ -238,6 +241,7 @@ tree_final_fit
 tree_final_fit %>% extract_fit_engine() %>%
   rpart.plot()
 ```
+
 # Evaluación en test
 
 ```{r}
@@ -258,7 +262,8 @@ test_performance
 test_predictions <- rf_fit %>% collect_predictions()
 test_predictions
 ```
-Matriz de confusion
+
+## Matriz de confusion
 
 ```{r}
 collect_predictions(rf_fit) %>%
@@ -270,7 +275,7 @@ collect_predictions(rf_fit) %>%
   precision(High, .pred_class)
 ```
 
-# Importancia de las variables
+## Importancia de las variables
 
 ```{r}
 library(vip)
